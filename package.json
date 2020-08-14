@@ -1,6 +1,6 @@
 {
   "name": "l2t",
-  "version": "0.1.0",
+  "version": "0.2.1",
   "description": "Elegantly Convert List into Tree",
   "main": "dist/index.js",
   "repository": "https://github.com/ZibanPirate/l2t.git",
