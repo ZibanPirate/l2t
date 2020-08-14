@@ -10,7 +10,7 @@ export const listToTree = <ListItem, NodeItem>(
   list: ListItem[],
   itemIdFunc: (item: ListItem) => string,
   parentIdFunc: (item: ListItem) => string,
-  childrenKey: string,
+  childrenKey: keyof NodeItem,
   mapperFunc: (item: ListItem) => NodeItem,
 ) => {
   const tree: NodeItem[] = [];
