@@ -1,4 +1,4 @@
-name: "Run Test Coverage and Upload it to Codecov"
+name: "Tests"
 
 on:
   push:
