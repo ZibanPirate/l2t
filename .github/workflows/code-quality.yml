@@ -1,0 +1,51 @@
+name: "Code Quality check"
+
+on:
+  pull_request:
+    branches:
+      - master
+
+    paths:
+      - ".github/workflows/code-quality.yml"
+      - "src/**"
+
+jobs:
+  Conformity-Check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: "Checking Code Conformity with Style Guidelines"
+        run: |
+          yarn
+          yarn lint:check
+        env:
+          CI: true
+
+  Tests-Check:
+    runs-on: ubuntu-latest
+
+    strategy:
+      matrix:
+        node-version: [10.x]
+
+    steps:
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: "Running Tests with Coverage Report"
+        run: |
+          yarn
+          yarn test --coverage
+        env:
+          CI: true
