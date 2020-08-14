@@ -1,4 +1,4 @@
-# l2t
+# l2t - Convert List into Tree
 
 Elegantly Convert List into Tree
 
