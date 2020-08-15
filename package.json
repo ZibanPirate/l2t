@@ -24,7 +24,7 @@
   "scripts": {
     "lint:check": "eslint src --ext .tsx,.ts,.js,.json --report-unused-disable-directives",
     "lint:fix": "eslint src --ext .tsx,.ts,.js,.json --quiet --fix",
-    "test": "jest src",
+    "test": "yarn build && jest src",
     "build": "tsc",
     "build:watch": "tsc --watch"
   },
