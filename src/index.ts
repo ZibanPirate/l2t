@@ -14,10 +14,8 @@ export const listToTree = <ListItem, NodeItem>(
   mapperFunc: (item: ListItem) => NodeItem,
 ) => {
   const tree: NodeItem[] = [];
-  const ids: string[] = [];
   // clone deeply the list and map its items into nodes
   const nodes: NodeItem[] = list.map((listItem) => {
-    ids.push(itemIdFunc(listItem));
     return { ...mapperFunc(listItem), [childrenKey]: [] };
   });
 
@@ -36,8 +34,5 @@ export const listToTree = <ListItem, NodeItem>(
     }
   });
 
-  return {
-    tree,
-    ids,
-  };
+  return tree;
 };
