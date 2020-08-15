@@ -1,5 +1,4 @@
 module.exports = {
-  preset: "ts-jest",
   testEnvironment: "node",
   coverageThreshold: {
     global: {
@@ -9,4 +8,9 @@ module.exports = {
       statements: 100,
     },
   },
+  transform: {
+    "^.+\\.(ts|tsx)?$": "ts-jest",
+    "^.+\\.(js|jsx)$": "babel-jest",
+  },
+  coveragePathIgnorePatterns: ["node_modules", "dist"],
 };
