@@ -9,9 +9,9 @@
 export const listToTree = <ListItem, NodeItem>(
   list: ListItem[],
   itemIdFunc: (item: ListItem) => string,
-  parentIdFunc: (item: ListItem) => string,
+  parentIdFunc: (item: ListItem) => string | undefined,
   childrenKey: string,
-  mapperFunc: (item: ListItem) => NodeItem,
+  mapperFunc: (item: ListItem) => any,
 ) => {
   const tree: NodeItem[] = [];
   // clone deeply the list and map its items into nodes
