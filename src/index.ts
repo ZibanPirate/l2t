@@ -36,3 +36,5 @@ export const listToTree = <ListItem, NodeItem>(
 
   return tree;
 };
+
+export default listToTree;
