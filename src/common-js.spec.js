@@ -133,7 +133,6 @@ describe("Test CommonJS support", () => {
   });
 
   test("Test without mapper parameter", () => {
-    const ids = [];
     const tree = listToTree(
       articlesList,
       (item) => item.slug,
@@ -143,6 +142,5 @@ describe("Test CommonJS support", () => {
 
     expect(tree).toMatchObject(articlesTree);
 
-    expect(ids).toMatchObject(treeIds);
   });
 });
