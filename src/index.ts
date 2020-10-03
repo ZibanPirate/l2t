@@ -16,16 +16,19 @@ export const listToTree = <ListItem, NodeItem>(
   const tree: NodeItem[] = [];
   // clone deeply the list and map its items into nodes
   const nodes: NodeItem[] = list.map((listItem) => {
-    return (mapperFunc? { ...mapperFunc(listItem), [childrenKey]: [] } : { ...listItem, [childrenKey]: [] });
+    return mapperFunc
+      ? { ...mapperFunc(listItem), [childrenKey]: [] }
+      : { ...listItem, [childrenKey]: [] };
   });
 
   // Group all items based on both their IDs and their parentIDs
   nodes.forEach((node, index) => {
-    const parentId = parentIdFunc(list[index]); // get its parent's ID
+    const parentId = getId(parentIdFunc, list[index]); // get its parent's ID
 
     // try to find its parent if it does exist
     const parentItem = nodes.find(
-      (parentItem, parentIndex) => itemIdFunc(list[parentIndex]) === parentId,
+      (parentItem, parentIndex) =>
+        getId(itemIdFunc, list[parentIndex]) === parentId,
     );
     if (parentItem) {
       (parentItem as any)[childrenKey].push(node);
@@ -36,5 +39,14 @@ export const listToTree = <ListItem, NodeItem>(
 
   return tree;
 };
+
+function getId(idGetter: string | Function, item: any) {
+  if (typeof idGetter === "string") {
+    return item[idGetter] || null;
+  }
+  if (typeof idGetter === "function") {
+    return idGetter(item);
+  }
+}
 
 export default listToTree;
