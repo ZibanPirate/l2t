@@ -132,15 +132,14 @@ describe("Test CommonJS support", () => {
     expect(ids).toMatchObject(treeIds);
   });
 
-  test("Test without mapper parameter", () => {
+  test("Simple List to Tree case", () => {
     const tree = listToTree(
-      articlesList,
-      (item) => item.slug,
-      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      simpleList,
+      (item) => item.id,
+      (item) => item.parentId,
       "children",
     );
 
-    expect(tree).toMatchObject(articlesTree);
-
+    expect(tree).toMatchObject(simpleTree);
   });
 });
