@@ -147,11 +147,51 @@ describe("Test ES6 support", () => {
     expect(tree).toMatchObject(articlesTree);
   });
 
+  test("Articles List to SideBar Tree using string parameters", () => {
+    const tree = listToTree(
+      articlesList,
+      "slug",
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+      (item) => {
+        return {
+          content: item.title,
+          id: item.slug,
+          link: "/Articles/" + item.slug,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+  });
+
   test("Articles List to SideBar Tree with IDs", () => {
     const ids = [];
     const tree = listToTree(
       articlesList,
       (item) => item.slug,
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+      (item) => {
+        ids.push(item.slug);
+        return {
+          content: item.title,
+          id: item.slug,
+          link: "/Articles/" + item.slug,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+
+    expect(ids).toMatchObject(treeIds);
+  });
+
+  test("Articles List to SideBar Tree with IDs using string parameters", () => {
+    const ids = [];
+    const tree = listToTree(
+      articlesList,
+      "slug",
       (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
       "children",
       (item) => {
