@@ -36,6 +36,25 @@ const simpleTree: SimpleNode[] = [
   },
 ];
 
+const simpleTreeNotMapped = [ 
+  { id: '1',
+    label: '1',
+    children: [ 
+      { id: '2', label: '2', parentId: '1', children: [] },
+      { id: '3', label: '3', parentId: '1', children: [] } ],
+  },
+  { 
+    id: '4', 
+    label: '4', 
+    children: [],
+  },
+  { 
+    id: '5',
+    label: '5',
+    children: [ { id: '6', label: '6', parentId: '5', children: [] }] 
+  },
+];
+
 export interface Article {
   slug: string;
   image?: string;
@@ -196,5 +215,15 @@ describe("Test Typescript support", () => {
     expect(tree).toMatchObject(articlesTree);
 
     expect(ids).toMatchObject(treeIds);
+  });
+  
+  test("Simple Tree without Mapper function", () => {
+    const tree = listToTree(
+      simpleList,
+      (item) => item.id,
+      (item) => item.parentId,
+      "children",
+    );
+    expect(tree).toMatchObject(simpleTreeNotMapped);
   });
 });

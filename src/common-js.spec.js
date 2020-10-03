@@ -25,6 +25,25 @@ const simpleTree = [
   },
 ];
 
+const simpleTreeNotMapped = [ 
+  { id: '1',
+    label: '1',
+    children: [ 
+      { id: '2', label: '2', parentId: '1', children: [] },
+      { id: '3', label: '3', parentId: '1', children: [] } ],
+  },
+  { 
+    id: '4', 
+    label: '4', 
+    children: [],
+  },
+  { 
+    id: '5',
+    label: '5',
+    children: [ { id: '6', label: '6', parentId: '5', children: [] }] 
+  },
+];
+
 const articlesList = [
   { slug: "First_Article", title: "First Article" },
   { slug: "First_Article/First_Sub-Article", title: "First Sub-Article" },
@@ -130,5 +149,15 @@ describe("Test CommonJS support", () => {
     expect(tree).toMatchObject(articlesTree);
 
     expect(ids).toMatchObject(treeIds);
+  });
+
+  test("Simple Tree without Mapper function", () => {
+    const tree = listToTree(
+      simpleList,
+      (item) => item.id,
+      (item) => item.parentId,
+      "children",
+    );
+    expect(tree).toMatchObject(simpleTreeNotMapped);
   });
 });

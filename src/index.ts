@@ -11,12 +11,12 @@ export const listToTree = <ListItem, NodeItem>(
   itemIdFunc: (item: ListItem) => string,
   parentIdFunc: (item: ListItem) => string | undefined,
   childrenKey: keyof NodeItem,
-  mapperFunc: (item: ListItem) => any,
+  mapperFunc?: (item: ListItem) => any,
 ) => {
   const tree: NodeItem[] = [];
   // clone deeply the list and map its items into nodes
   const nodes: NodeItem[] = list.map((listItem) => {
-    return { ...mapperFunc(listItem), [childrenKey]: [] };
+    return (mapperFunc? { ...mapperFunc(listItem), [childrenKey]: [] } : { ...listItem, [childrenKey]: [] });
   });
 
   // Group all items based on both their IDs and their parentIDs
