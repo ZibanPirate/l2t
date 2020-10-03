@@ -218,4 +218,9 @@ describe("Test ES6 support", () => {
     );
     expect(tree).toMatchObject(simpleTreeNotMapped);
   });
+
+  test("Simple Tree without Mapper function using string parameters", () => {
+    const tree = listToTree(simpleList, "id", "parentId", "children");
+    expect(tree).toMatchObject(simpleTreeNotMapped);
+  });
 });
