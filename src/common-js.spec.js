@@ -131,4 +131,18 @@ describe("Test CommonJS support", () => {
 
     expect(ids).toMatchObject(treeIds);
   });
+
+  test("Test without mapper parameter", () => {
+    const ids = [];
+    const tree = listToTree(
+      articlesList,
+      (item) => item.slug,
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+
+    expect(ids).toMatchObject(treeIds);
+  });
 });
