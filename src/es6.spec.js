@@ -223,4 +223,11 @@ describe("Test ES6 support", () => {
     const tree = listToTree(simpleList, "id", "parentId", "children");
     expect(tree).toMatchObject(simpleTreeNotMapped);
   });
+
+  test("Should fail when nonsense parameters are used", () => {
+    expect(() =>
+      listToTree(simpleList, { id: "id" }, undefined, "children"),
+    ).toThrowError("Getter must be a string or a function.");
+    // expect(tree).toMatchObject([]);
+  });
 });

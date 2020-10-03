@@ -44,9 +44,7 @@ function getId(idGetter: string | Function, item: any) {
   if (typeof idGetter === "string") {
     return item[idGetter] || null;
   }
-  if (typeof idGetter === "function") {
-    return idGetter(item);
-  }
+  return idGetter(item);
 }
 
 export default listToTree;
