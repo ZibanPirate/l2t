@@ -40,6 +40,11 @@ export const listToTree = <ListItem, NodeItem>(
   return tree;
 };
 
+/**
+ * Gets id based either on a string name or a getter function
+ * @param idGetter name of the field or function to get it from the item
+ * @param item to get the field value from
+ */
 function getId(idGetter: string | Function, item: any) {
   if (typeof idGetter === "string") {
     return item[idGetter] || null;

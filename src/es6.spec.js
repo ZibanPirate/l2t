@@ -227,7 +227,6 @@ describe("Test ES6 support", () => {
   test("Should fail when nonsense parameters are used", () => {
     expect(() =>
       listToTree(simpleList, { id: "id" }, undefined, "children"),
-    ).toThrowError("Getter must be a string or a function.");
-    // expect(tree).toMatchObject([]);
+    ).toThrowError("idGetter is not a function");
   });
 });
