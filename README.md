@@ -60,8 +60,10 @@ const tree = listToTree(
   // the list
   simpleList,
   // a function returns id of the item
+  // or a string name of the id field e.g. 'id'
   (item) => item.id,
   // a function returns id of the item's parent
+  // or a string name of the parent id field e.g. 'parentId'
   (item) => item.parentId,
   // key for storing children items if there are any
   "children",
@@ -150,8 +152,10 @@ const simpleList: SimpleItem[] = [
 const tree = listToTree<SimpleItem, SimpleNode>(
   simpleList,
   // a function returns id of the item
+  // or a string name of the id field e.g. 'id'
   (item) => item.id,
   // a function returns id of the item's parent
+  // or a string name of the parent id field e.g. 'parentId'
   (item) => item.parentId,
   // key for storing children items if there are any, note that when using typescript,
   // this key has to be one of the keys in the node interface (SimpleNode in this case)

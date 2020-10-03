@@ -36,22 +36,24 @@ const simpleTree: SimpleNode[] = [
   },
 ];
 
-const simpleTreeNotMapped = [ 
-  { id: '1',
-    label: '1',
-    children: [ 
-      { id: '2', label: '2', parentId: '1', children: [] },
-      { id: '3', label: '3', parentId: '1', children: [] } ],
+const simpleTreeNotMapped = [
+  {
+    id: "1",
+    label: "1",
+    children: [
+      { id: "2", label: "2", parentId: "1", children: [] },
+      { id: "3", label: "3", parentId: "1", children: [] },
+    ],
   },
-  { 
-    id: '4', 
-    label: '4', 
+  {
+    id: "4",
+    label: "4",
     children: [],
   },
-  { 
-    id: '5',
-    label: '5',
-    children: [ { id: '6', label: '6', parentId: '5', children: [] }] 
+  {
+    id: "5",
+    label: "5",
+    children: [{ id: "6", label: "6", parentId: "5", children: [] }],
   },
 ];
 
@@ -137,10 +139,45 @@ describe("Test Typescript support", () => {
     expect(tree).toMatchObject(simpleTree);
   });
 
+  test("Simple List to Tree case using string parameters", () => {
+    const tree = listToTree<SimpleItem, SimpleNode>(
+      simpleList,
+      "id",
+      "parentId",
+      "children",
+      (item) => {
+        return {
+          label: `item-number-${item.label}`,
+          index: item.id,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(simpleTree);
+  });
+
   test("Articles List to SideBar Tree", () => {
     const tree = listToTree<Article, SidebarTreeItem>(
       articlesList,
       (item) => item.slug,
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+      (item) => {
+        return {
+          content: item.title,
+          id: item.slug,
+          link: "/Articles/" + item.slug,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+  });
+
+  test("Articles List to SideBar Tree using string parameters", () => {
+    const tree = listToTree<Article, SidebarTreeItem>(
+      articlesList,
+      "slug",
       (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
       "children",
       (item) => {
@@ -177,10 +214,50 @@ describe("Test Typescript support", () => {
     expect(ids).toMatchObject(treeIds);
   });
 
+  test("Articles List to SideBar Tree with IDs using string parameters", () => {
+    const ids: string[] = [];
+    const tree = listToTree<Article, SidebarTreeItem>(
+      articlesList,
+      "slug",
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+      (item) => {
+        ids.push(item.slug);
+        return {
+          content: item.title,
+          id: item.slug,
+          link: "/Articles/" + item.slug,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+
+    expect(ids).toMatchObject(treeIds);
+  });
+
   test("Articles List to SideBar Tree", () => {
     const tree = l2t<Article, SidebarTreeItem>(
       articlesList,
       (item) => item.slug,
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+      (item) => {
+        return {
+          content: item.title,
+          id: item.slug,
+          link: "/Articles/" + item.slug,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+  });
+
+  test("Articles List to SideBar Tree using string parameters", () => {
+    const tree = l2t<Article, SidebarTreeItem>(
+      articlesList,
+      "slug",
       (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
       "children",
       (item) => {
@@ -216,7 +293,29 @@ describe("Test Typescript support", () => {
 
     expect(ids).toMatchObject(treeIds);
   });
-  
+
+  test("Articles List to SideBar Tree with IDs using string parameters", () => {
+    const ids: string[] = [];
+    const tree = l2t<Article, SidebarTreeItem>(
+      articlesList,
+      "slug",
+      (item) => item.slug.substring(0, item.slug.lastIndexOf("/")),
+      "children",
+      (item) => {
+        ids.push(item.slug);
+        return {
+          content: item.title,
+          id: item.slug,
+          link: "/Articles/" + item.slug,
+        };
+      },
+    );
+
+    expect(tree).toMatchObject(articlesTree);
+
+    expect(ids).toMatchObject(treeIds);
+  });
+
   test("Simple Tree without Mapper function", () => {
     const tree = listToTree(
       simpleList,
@@ -224,6 +323,11 @@ describe("Test Typescript support", () => {
       (item) => item.parentId,
       "children",
     );
+    expect(tree).toMatchObject(simpleTreeNotMapped);
+  });
+
+  test("Simple Tree without Mapper function using string parameters", () => {
+    const tree = listToTree(simpleList, "id", "parentId", "children");
     expect(tree).toMatchObject(simpleTreeNotMapped);
   });
 });
