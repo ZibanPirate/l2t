@@ -8,8 +8,8 @@
  */
 export const listToTree = <ListItem, NodeItem>(
   list: ListItem[],
-  itemIdFunc: (item: ListItem) => string,
-  parentIdFunc: (item: ListItem) => string | undefined,
+  itemIdFunc: ((item: ListItem) => string) | string,
+  parentIdFunc: ((item: ListItem) => string | undefined) | string,
   childrenKey: keyof NodeItem,
   mapperFunc?: (item: ListItem) => any,
 ) => {
